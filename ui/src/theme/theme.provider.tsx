@@ -1,65 +1,80 @@
-import { createContext, useEffect, useState } from 'react';
+import { ReactNode, createContext, useMemo, useState } from 'react';
+import {
+	ThemeProvider as MuiThemeProvider,
+	GlobalStyles,
+	CssBaseline,
+	useMediaQuery,
+	createTheme,
+	ThemeOptions,
+} from '@mui/material';
+import { CustomPalette } from './enums';
+import { color as ThemeColors } from '.';
 
-type Theme = 'dark' | 'light' | 'system';
+export const ThemeContext = createContext({
+	toggleColorMode: () => {},
+	shuffleColorTheme: () => {},
+});
 
 type ThemeProviderProps = {
-	children: React.ReactNode;
-	defaultTheme?: Theme;
-	storageKey?: string;
+	children: ReactNode | ReactNode[];
 };
 
-type ThemeProviderState = {
-	theme: Theme;
-	setTheme: (theme: Theme) => void;
-};
+type ColorMode = 'light' | 'dark';
 
-const initialState: ThemeProviderState = {
-	theme: 'system',
-	setTheme: () => null,
-};
+export default function ThemeProvider({ children }: ThemeProviderProps) {
+	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
-export const ThemeProviderContext =
-	createContext<ThemeProviderState>(initialState);
-
-export function ThemeProvider({
-	children,
-	defaultTheme = 'system',
-	storageKey = 'vite-ui-theme',
-	...props
-}: ThemeProviderProps) {
-	const [theme, setTheme] = useState<Theme>(
-		() => (localStorage.getItem(storageKey) as Theme) || defaultTheme
+	const [mode, setMode] = useState<ColorMode>(
+		prefersDarkMode ? 'dark' : 'light'
 	);
 
-	useEffect(() => {
-		const root = window.document.documentElement;
+	const colorMode = useMemo(
+		() => ({
+			toggleColorMode: () =>
+				setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light')),
+			shuffleColorTheme: () =>
+				setTheme((prevTheme) => ((prevTheme + 1) % 4) as CustomPalette),
+		}),
+		[]
+	);
 
-		root.classList.remove('light', 'dark');
+	const [theme, setTheme] = useState<CustomPalette>(CustomPalette.ONE);
 
-		if (theme === 'system') {
-			const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
-				.matches
-				? 'dark'
-				: 'light';
-
-			root.classList.add(systemTheme);
-			return;
-		}
-
-		root.classList.add(theme);
-	}, [theme]);
-
-	const value = {
-		theme,
-		setTheme: (theme: Theme) => {
-			localStorage.setItem(storageKey, theme);
-			setTheme(theme);
-		},
-	};
+	const _theme = useMemo(
+		() => createTheme(ThemeColors[theme][mode] as ThemeOptions),
+		[mode, theme]
+	);
 
 	return (
-		<ThemeProviderContext.Provider {...props} value={value}>
-			{children}
-		</ThemeProviderContext.Provider>
+		<ThemeContext.Provider value={colorMode}>
+			<MuiThemeProvider theme={_theme}>
+				<GlobalStyles
+					styles={{
+						'html, body': {
+							overflowX: 'hidden',
+							overflowY: 'auto',
+						},
+						'html, body, #root': {
+							height: '100%',
+							width: '100%',
+						},
+						'::-webkit-scrollbar': {
+							width: '0.4rem',
+						},
+						'::-webkit-scrollbar-track': {
+							background: '#f1f1f1',
+						},
+						'::-webkit-scrollbar-thumb': {
+							background: '#888',
+						},
+						'::-webkit-scrollbar-thumb:hover': {
+							background: '#555',
+						},
+					}}
+				/>
+				<CssBaseline enableColorScheme />
+				{children}
+			</MuiThemeProvider>
+		</ThemeContext.Provider>
 	);
 }
