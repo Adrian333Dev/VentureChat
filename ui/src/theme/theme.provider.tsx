@@ -7,12 +7,10 @@ import {
 	createTheme,
 	ThemeOptions,
 } from '@mui/material';
-import { CustomPalette } from './enums';
-import { color as ThemeColors } from '.';
+import { mainTheme } from './presets';
 
 export const ThemeContext = createContext({
 	toggleColorMode: () => {},
-	shuffleColorTheme: () => {},
 });
 
 type ThemeProviderProps = {
@@ -32,17 +30,13 @@ export default function ThemeProvider({ children }: ThemeProviderProps) {
 		() => ({
 			toggleColorMode: () =>
 				setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light')),
-			shuffleColorTheme: () =>
-				setTheme((prevTheme) => ((prevTheme + 1) % 4) as CustomPalette),
 		}),
 		[]
 	);
 
-	const [theme, setTheme] = useState<CustomPalette>(CustomPalette.ONE);
-
 	const _theme = useMemo(
-		() => createTheme(ThemeColors[theme][mode] as ThemeOptions),
-		[mode, theme]
+		() => createTheme(mainTheme[mode] as ThemeOptions),
+		[mode]
 	);
 
 	return (
@@ -58,18 +52,15 @@ export default function ThemeProvider({ children }: ThemeProviderProps) {
 							height: '100%',
 							width: '100%',
 						},
-						'::-webkit-scrollbar': {
-							width: '0.4rem',
+						'.MuiAppBar-root': {
+							backgroundImage: 'none',
 						},
-						'::-webkit-scrollbar-track': {
-							background: '#f1f1f1',
-						},
-						'::-webkit-scrollbar-thumb': {
-							background: '#888',
-						},
-						'::-webkit-scrollbar-thumb:hover': {
-							background: '#555',
-						},
+						// '::-webkit-scrollbar': {
+						// 	width: '0.4rem',
+						// },
+						// '::-webkit-scrollbar-track': {
+						// 	background: 'transparent',
+						// },
 					}}
 				/>
 				<CssBaseline enableColorScheme />
