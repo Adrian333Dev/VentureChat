@@ -27,10 +27,14 @@
 			"@hooks": ["hooks"],
 			"@pages": ["pages"],
 			"@fonts": ["fonts"],
+			"@styles": ["styles"],
+			"@store": ["store"],
+			"@services": ["services"],
+			/* Nested */
 			"@utils/*": ["utils/*"],
 			"@theme/*": ["theme/*"],
 			"@constants/*": ["constants/*"],
-			"@styles": ["styles"],
+			"@store/*": ["store/*"]
 		}
 	},
 	"include": ["src"],
