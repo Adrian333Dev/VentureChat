@@ -16,6 +16,7 @@ export default defineConfig(({ mode }) => {
 				'@utils': path.resolve(__dirname, 'src/utils'),
 				'@theme': path.resolve(__dirname, 'src/theme'),
 				'@constants': path.resolve(__dirname, 'src/constants'),
+				'@styles': path.resolve(__dirname, 'src/styles'),
 			},
 		},
 		define: {

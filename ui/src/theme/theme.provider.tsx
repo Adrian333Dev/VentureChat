@@ -44,6 +44,9 @@ export default function ThemeProvider({ children }: ThemeProviderProps) {
 			<MuiThemeProvider theme={_theme}>
 				<GlobalStyles
 					styles={{
+						'*': {
+							boxSizing: 'border-box',
+						},
 						'html, body': {
 							overflowX: 'hidden',
 							overflowY: 'auto',
@@ -51,6 +54,10 @@ export default function ThemeProvider({ children }: ThemeProviderProps) {
 						'html, body, #root': {
 							height: '100%',
 							width: '100%',
+						},
+						img: {
+							width: '100%',
+							height: 'auto',
 						},
 						'.MuiAppBar-root': {
 							backgroundImage: 'none',

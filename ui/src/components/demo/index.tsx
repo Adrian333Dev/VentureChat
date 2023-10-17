@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import {
 	Box,
 	Card,
@@ -11,17 +12,16 @@ import {
 } from '@mui/material';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import DarkModeSwitch from './DarkModeSwitch';
-import ThemeColorShuffle from './ThemeColorShuffle';
+import { ColorModeSwitcher, ThemeSwitcher } from '@components';
 
-export const Main = () => {
+const Demo: FC = () => {
 	return (
 		<Card>
 			<CardContent>
 				<Stack direction='column' spacing={5}>
 					<Stack direction='row' spacing={5}>
-						<DarkModeSwitch />
-						<ThemeColorShuffle />
+						<ColorModeSwitcher />
+						<ThemeSwitcher />
 					</Stack>
 					<Stack direction='row' spacing={5}>
 						<Button variant={'contained'} color={'primary'}>
@@ -63,3 +63,5 @@ export const Main = () => {
 		</Card>
 	);
 };
+
+export default Demo;

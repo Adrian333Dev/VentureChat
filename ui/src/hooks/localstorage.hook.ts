@@ -1,7 +1,36 @@
 import { useState } from 'react';
 
-export const useLocalStorage = (key: string, initialValue: unknown = '') => {
-	const [storedValue, setStoredValue] = useState(() => {
+// export const useLocalStorage = (key: string, initialValue: unknown = '') => {
+// 	const [storedValue, setStoredValue] = useState(() => {
+// 		try {
+// 			const item = localStorage.getItem(key);
+// 			return item ? JSON.parse(item) : initialValue;
+// 		} catch (error) {
+// 			console.log(error);
+// 			return initialValue;
+// 		}
+// 	});
+
+// 	const setValue = (value: unknown) => {
+// 		try {
+// 			const valueToStore =
+// 				value instanceof Function ? value(storedValue) : value;
+// 			setStoredValue(valueToStore);
+// 			localStorage.setItem(key, JSON.stringify(valueToStore));
+// 		} catch (error) {
+// 			console.log(error);
+// 		}
+// 	};
+
+// 	return [storedValue, setValue];
+// };
+
+// Use Generic Types
+export const useLocalStorage = <T>(
+	key: string,
+	initialValue: T
+): [T, (value: T) => void] => {
+	const [storedValue, setStoredValue] = useState<T>(() => {
 		try {
 			const item = localStorage.getItem(key);
 			return item ? JSON.parse(item) : initialValue;
@@ -11,7 +40,7 @@ export const useLocalStorage = (key: string, initialValue: unknown = '') => {
 		}
 	});
 
-	const setValue = (value: unknown) => {
+	const setValue = (value: T) => {
 		try {
 			const valueToStore =
 				value instanceof Function ? value(storedValue) : value;

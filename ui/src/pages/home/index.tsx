@@ -1,56 +1,35 @@
-import { FC, KeyboardEvent, MouseEvent, useEffect, useState } from 'react';
-import { useMediaQuery } from '@mui/material';
+import { FC } from 'react';
+import { Box } from '@mui/material';
 
-import { Navbar, Sidebar } from '../templates';
-import { Main as MainDemo } from '@components';
-import { Main } from './styles';
-
-const serversDrawerWidth = 60;
-const channelsDrawerWidth = 240;
-const drawerWidth = serversDrawerWidth + channelsDrawerWidth;
+import { DrawerHeader, Main } from './styles';
+import { Drawers, Navbar } from '../templates';
+import { Demo } from '@components';
 
 const Home: FC = () => {
-	const isDesktop = useMediaQuery('(min-width: 800px)');
-	const [isSidebarOpen, setIsSidebarOpen] = useState(isDesktop);
-
-	useEffect(() => {
-		if (isDesktop) setIsSidebarOpen(true);
-		else setIsSidebarOpen(false);
-	}, [isDesktop]);
-
-	const handleSidebarToggle =
-		(value = !isSidebarOpen) =>
-		(e: KeyboardEvent | MouseEvent) => {
-			if (
-				e &&
-				e.type === 'keydown' &&
-				((e as KeyboardEvent).key === 'Tab' ||
-					(e as KeyboardEvent).key === 'Shift')
-			)
-				return;
-			setIsSidebarOpen(value);
-		};
-
 	return (
 		<>
-			<Navbar
-				handleMenuClick={handleSidebarToggle}
-				isSidebarOpen={isSidebarOpen}
-				drawerWidth={drawerWidth}
-				isDesktop={isDesktop}
-			/>
-			<Sidebar
-				isDesktop={isDesktop}
-				isOpen={isSidebarOpen}
-				drawerWidth={drawerWidth}
-			/>
-			<Main
-				isDesktop={isDesktop}
-				isSidebarOpen={isSidebarOpen}
-				drawerWidth={drawerWidth}
+			<Box
+				sx={{
+					width: '100%',
+					height: '100vh',
+					display: 'flex',
+				}}
 			>
-				<MainDemo />
-			</Main>
+				<Drawers />
+				<Box
+					sx={{
+						flex: 1,
+						height: '100%',
+						position: 'relative',
+					}}
+				>
+					<Navbar />
+					<Main>
+						<DrawerHeader />
+						<Demo />
+					</Main>
+				</Box>
+			</Box>
 		</>
 	);
 };

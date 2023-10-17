@@ -29,7 +29,8 @@
 			"@fonts": ["fonts"],
 			"@utils/*": ["utils/*"],
 			"@theme/*": ["theme/*"],
-			"@constants/*": ["constants/*"]
+			"@constants/*": ["constants/*"],
+			"@styles": ["styles"],
 		}
 	},
 	"include": ["src"],

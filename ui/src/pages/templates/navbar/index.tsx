@@ -1,4 +1,4 @@
-import { FC, KeyboardEvent, MouseEvent } from 'react';
+import { FC } from 'react';
 import { Toolbar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { AppBar, MenuButton, StyledTitle } from './styles';
@@ -13,41 +13,20 @@ const title = (
 );
 
 interface NavbarProps {
-	isSidebarOpen: boolean;
-	isDesktop: boolean;
-	drawerWidth: number;
-	handleMenuClick: (value?: boolean) => (e: KeyboardEvent | MouseEvent) => void;
+	handleMenuClick?: (value?: boolean) => void;
 }
 
-const Navbar: FC<NavbarProps> = ({
-	isSidebarOpen,
-	isDesktop,
-	drawerWidth,
-	handleMenuClick,
-}) => {
+const Navbar: FC<NavbarProps> = () => {
 	return (
 		<>
-			<AppBar
-				position='fixed'
-				open={isSidebarOpen}
-				drawerWidth={drawerWidth}
-				variant='outlined'
-				elevation={0}
-				sx={{ borderLeft: 'none' }}
-			>
+			<AppBar>
 				<Toolbar variant='dense'>
-					<MenuButton
-						color='inherit'
-						isDesktop={isDesktop}
-						isSidebarOpen={isSidebarOpen}
-						onClick={handleMenuClick()}
-					>
+					<MenuButton color='inherit'>
 						<MenuIcon />
 					</MenuButton>
 					{title}
 				</Toolbar>
 			</AppBar>
-			<Toolbar sx={{ display: 'hidden' }} />
 		</>
 	);
 };

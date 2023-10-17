@@ -1,11 +1,12 @@
-import { useContext } from 'react';
+import { FC, useContext } from 'react';
 import { useTheme } from '@mui/material/styles';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { ToggleButton } from '@mui/material';
-import { ThemeContext } from '../theme/theme.provider';
 
-const DarkModeSwitch = () => {
+import { ThemeContext } from '@theme/theme.provider';
+
+const ColorModeSwitcher: FC = () => {
 	const theme = useTheme();
 	const colorMode = useContext(ThemeContext);
 	return (
@@ -21,4 +22,4 @@ const DarkModeSwitch = () => {
 	);
 };
 
-export default DarkModeSwitch;
+export default ColorModeSwitcher;
