@@ -1,35 +1,21 @@
 import { FC } from 'react';
-import { Box } from '@mui/material';
 
-import { DrawerHeader, Main } from './styles';
+import { MainContent, MainContainer, Root } from './styles';
 import { Drawers, Navbar } from '../templates';
 import { Demo } from '@components';
 
 const Home: FC = () => {
 	return (
 		<>
-			<Box
-				sx={{
-					width: '100%',
-					height: '100vh',
-					display: 'flex',
-				}}
-			>
+			<Root>
 				<Drawers />
-				<Box
-					sx={{
-						flex: 1,
-						height: '100%',
-						position: 'relative',
-					}}
-				>
+				<MainContainer>
 					<Navbar />
-					<Main>
-						<DrawerHeader />
+					<MainContent>
 						<Demo />
-					</Main>
-				</Box>
-			</Box>
+					</MainContent>
+				</MainContainer>
+			</Root>
 		</>
 	);
 };
