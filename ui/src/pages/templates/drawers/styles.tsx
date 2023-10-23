@@ -5,7 +5,7 @@ import {
 	Drawer as MuiDrawer,
 	DrawerProps as MuiDrawerProps,
 } from '@mui/material';
-import { flexCenter } from '@constants/common-styles';
+import { flexCenter } from '@shared/constants/common-styles';
 
 export const DrawerContent = styled(Box)(() => ({
 	overflowY: 'auto',

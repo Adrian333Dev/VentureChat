@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 
 import { DrawerContent, StyledList } from './styles';
-import { flexCenter } from '@constants/common-styles';
+import { flexCenter } from '@shared/constants/common-styles';
 
 const mockCategories = Array.from({ length: 20 }, (_, i) => ({
 	id: i,
