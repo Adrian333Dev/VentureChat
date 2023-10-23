@@ -1,1 +1,1 @@
-export * from './post.service.example';
+export * from './category.service';

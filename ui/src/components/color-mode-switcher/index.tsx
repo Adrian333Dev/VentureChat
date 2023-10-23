@@ -4,7 +4,7 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { ToggleButton } from '@mui/material';
 
-import { ThemeContext } from '@theme/theme.provider';
+import { ThemeContext } from '@styles/theme';
 
 const ColorModeSwitcher: FC = () => {
 	const theme = useTheme();

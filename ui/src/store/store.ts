@@ -1,19 +1,15 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { userReducerExample } from './reducers';
-import { postExampleAPI } from '@services';
+import { configureStore } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query';
 
-const rootReducer = combineReducers({
-	userReducerExample,
-	[postExampleAPI.reducerPath]: postExampleAPI.reducer,
+export const store = configureStore({
+	reducer: {},
+	middleware: (getDefaultMiddleware) => getDefaultMiddleware({}).concat([]),
 });
 
-export const setupStore = () => {
-	return configureStore({
-		reducer: rootReducer,
-		middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(postExampleAPI.middleware),
-	});
-};
+// optional, but required for refetchOnFocus/refetchOnReconnect behaviors
+// see `setupListeners` docs - takes an optional callback as the 2nd arg for customization
+setupListeners(store.dispatch);
 
-export type RootState = ReturnType<typeof rootReducer>;
-export type AppStore = ReturnType<typeof setupStore>;
-export type AppDispatch = AppStore['dispatch'];
+export type AppStore = typeof store;
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

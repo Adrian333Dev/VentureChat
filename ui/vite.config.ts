@@ -1,25 +1,26 @@
 import path from 'path';
+import fs from 'fs';
 import react from '@vitejs/plugin-react';
 import { defineConfig, loadEnv } from 'vite';
+
+// get all folders in src folder
+const pathes = fs
+	.readdirSync(path.resolve(__dirname, 'src'), { withFileTypes: true })
+	.filter((dirent) => dirent.isDirectory())
+	.map((dirent) => dirent.name);
+
+// get all folders in src folder as alias
+const alias = pathes.reduce((acc, cur) => {
+	acc[`@${cur}`] = path.resolve(__dirname, `src/${cur}`);
+	return acc;
+}, {});
 
 export default defineConfig(({ mode }) => {
 	const env = loadEnv(mode, process.cwd(), '');
 	return {
 		plugins: [react()],
 		resolve: {
-			alias: {
-				'@': path.resolve(__dirname, 'src'),
-				'@components': path.resolve(__dirname, 'src/components'),
-				'@hooks': path.resolve(__dirname, 'src/hooks'),
-				'@pages': path.resolve(__dirname, 'src/pages'),
-				'@fonts': path.resolve(__dirname, 'src/fonts'),
-				'@utils': path.resolve(__dirname, 'src/utils'),
-				'@theme': path.resolve(__dirname, 'src/theme'),
-				'@constants': path.resolve(__dirname, 'src/constants'),
-				'@styles': path.resolve(__dirname, 'src/styles'),
-				'@store': path.resolve(__dirname, 'src/store'),
-				'@services': path.resolve(__dirname, 'src/services'),
-			},
+			alias,
 		},
 		define: {
 			'process.env': env,

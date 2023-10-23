@@ -21,20 +21,9 @@
 		"noFallthroughCasesInSwitch": true,
 
 		/* Paths */
-		"baseUrl": "src",
+		"baseUrl": ".",
 		"paths": {
-			"@components": ["components"],
-			"@hooks": ["hooks"],
-			"@pages": ["pages"],
-			"@fonts": ["fonts"],
-			"@styles": ["styles"],
-			"@store": ["store"],
-			"@services": ["services"],
-			/* Nested */
-			"@utils/*": ["utils/*"],
-			"@theme/*": ["theme/*"],
-			"@constants/*": ["constants/*"],
-			"@store/*": ["store/*"]
+			"@*": ["src/*"]
 		}
 	},
 	"include": ["src"],
