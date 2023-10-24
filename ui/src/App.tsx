@@ -6,18 +6,9 @@ import {
 	Route,
 } from 'react-router-dom';
 
-import { Home } from '@pages';
-
-const router = createBrowserRouter(
-	createRoutesFromElements(
-		<Route>
-			<Route path='/' element={<Home />} />
-		</Route>
-	)
-);
+const router = createBrowserRouter(createRoutesFromElements(<Route></Route>));
 
 const App: FC = () => {
-
 	return <RouterProvider router={router} />;
 };
 
