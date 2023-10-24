@@ -1,21 +1,13 @@
-import React from 'react';
+import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
-import { StyledEngineProvider } from '@mui/material';
-import { Provider } from 'react-redux';
 
-import App from './App.tsx';
-import './index.css';
-import { store } from '@store';
-import { ThemeProvider } from '@styles/theme';
+import { App } from '@app';
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-	<React.StrictMode>
-		<StyledEngineProvider injectFirst>
-			<ThemeProvider>
-				<Provider store={store}>
-					<App />
-				</Provider>
-			</ThemeProvider>
-		</StyledEngineProvider>
-	</React.StrictMode>
+	<StrictMode>
+		<BrowserRouter>
+			<App />
+		</BrowserRouter>
+	</StrictMode>
 );
