@@ -1,18 +1,25 @@
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, useState } from 'react';
 
 import { Content, Main, Root } from './styles';
-import { Navbar, SideNav } from './templates';
+import { Navbar, SideNav } from './components';
 
 interface IMainLayoutProps {
 	children: ReactNode;
 }
 
 const MainLayout: FC<IMainLayoutProps> = ({ children }) => {
+	const [isThinSideNavOpen, setIsThinSideNavOpen] = useState<boolean>(false);
+	const handleThinSideNavChange = (isOpen: boolean) =>
+		setIsThinSideNavOpen(isOpen);
+
 	return (
 		<Root>
-			<SideNav />
+			<SideNav
+				isThinSideNavOpen={isThinSideNavOpen}
+				handleThinSideNavChange={handleThinSideNavChange}
+			/>
 			<Main>
-				<Navbar />
+				<Navbar handleMenuClick={() => handleThinSideNavChange(true)} />
 				<Content>{children}</Content>
 			</Main>
 		</Root>
