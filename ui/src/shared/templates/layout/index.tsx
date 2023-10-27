@@ -1,14 +1,26 @@
-import { FC, ReactNode, useEffect, useState } from 'react';
+import { ElementType, FC, useEffect, useState } from 'react';
+import { Box, useMediaQuery, useTheme } from '@mui/material';
 
-import { LayoutContainer } from './styles';
 import { SlidingXBox } from '@styles';
-import { useMediaQuery, useTheme } from '@mui/material';
-import { Drawer } from '../styles';
+import {
+	LayoutContainer,
+	Drawer,
+	MainContainer,
+	ContentContainer,
+} from './styles';
+import {
+	Navbar,
+	ActiveBar,
+	Sidebar,
+	ActiveBarItem,
+	SidebarItem,
+	SidebarList,
+} from './templates';
 
 interface LayoutProps {
-	activeBar: FC;
-	sideBar: FC;
-	main: FC;
+	activeBar: ElementType;
+	sideBar: ElementType;
+	main: ElementType;
 }
 
 const Layout: FC<LayoutProps> = ({
@@ -19,34 +31,59 @@ const Layout: FC<LayoutProps> = ({
 	const { breakpoints } = useTheme();
 	const isDesktop = useMediaQuery(breakpoints.up('md'));
 
-	const [isWideSideNavOpen, setIsWideSideNavOpen] = useState(isDesktop);
-	const [isThinSideNavOpen, setIsThinSideNavOpen] = useState<boolean>(false);
+	const [isLGSidebarOpen, setIsLGSidebarOpen] = useState(isDesktop);
+	const [isSMSidebarOpen, setIsSMSidebarOpen] = useState(false);
 
 	useEffect(() => {
-		setIsWideSideNavOpen(isDesktop), setIsThinSideNavOpen(false);
+		setIsLGSidebarOpen(isDesktop), setIsSMSidebarOpen(false);
 	}, [isDesktop]);
 
-	const getDesktopSidenavWidth = () => (isWideSideNavOpen ? 300 : 64);
+	const getDesktopSidenavWidth = () => (isLGSidebarOpen ? 300 : 64);
 
 	return (
 		<LayoutContainer>
+			{/* Desktop Sidebar Wrapper */}
 			<SlidingXBox
-				slide={isDesktop && isWideSideNavOpen}
+				slide={isDesktop && isLGSidebarOpen}
 				width={getDesktopSidenavWidth()}
 			>
+				{/* Sidebar */}
 				<Drawer
-					open={isWideSideNavOpen}
+					open={isLGSidebarOpen}
 					width={300}
 					PaperProps={{ sx: { paddingLeft: `${64}px` } }}
 				>
 					<Sidebar />
 				</Drawer>
-				<Drawer open={isDesktop} width={64} variant='persistent'>
+				{/* Active Bar */}
+				<Drawer open={isDesktop} width={64}>
 					<ActiveBar />
 				</Drawer>
 			</SlidingXBox>
+			{/* Mobile Sidebar */}
+			<Drawer
+				open={!isDesktop && isSMSidebarOpen}
+				width={'100%'}
+				onClose={() => setIsSMSidebarOpen(false)}
+				variant='temporary'
+			>
+				<Box>
+					<ActiveBar />
+					<Sidebar />
+				</Box>
+			</Drawer>
+			{/* Main Section */}
+			<MainContainer>
+				<Navbar handleMenuClick={() => setIsSMSidebarOpen(true)} />
+				{/* Main Content */}
+				<ContentContainer>
+					<Main />
+				</ContentContainer>
+			</MainContainer>
 		</LayoutContainer>
 	);
 };
 
 export default Layout;
+
+export { Navbar, ActiveBar, Sidebar, ActiveBarItem, SidebarItem, SidebarList };

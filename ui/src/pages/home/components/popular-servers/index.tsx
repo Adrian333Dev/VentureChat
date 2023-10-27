@@ -1,3 +1,6 @@
+import { ActiveBar } from '@shared/templates/layout/templates';
+import { FC } from 'react';
+
 interface MockServer {
 	id: string;
 	name: string;
@@ -11,8 +14,8 @@ const servers: MockServer[] = Array.from({ length: 20 }, (_, i) => ({
 	category: `Category ${i + 1}`,
 }));
 
-const Servers = () => {
-	return <div>index</div>;
+const PopularServers: FC = () => {
+	return <ActiveBar items={servers} />;
 };
 
-export default Servers;
+export default PopularServers;
