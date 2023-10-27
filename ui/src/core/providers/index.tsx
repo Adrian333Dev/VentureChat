@@ -1,12 +1,10 @@
-import { Provider } from 'react-redux';
-import { StyledEngineProvider } from '@mui/material';
+import { Provider as StoreProvider } from 'react-redux';
+
 import { store } from '@core/store';
-import { ThemeProvider } from '@styles/theme';
+import ThemeProvider from './theme.provider';
 
 export const Providers = ({ children }: { children: React.ReactNode }) => (
-  <StyledEngineProvider injectFirst>
-    <ThemeProvider>
-      <Provider store={store}>{children}</Provider>
-    </ThemeProvider>
-  </StyledEngineProvider>
+	<ThemeProvider>
+		<StoreProvider store={store}>{children}</StoreProvider>
+	</ThemeProvider>
 );

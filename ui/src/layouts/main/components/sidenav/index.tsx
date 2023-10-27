@@ -5,6 +5,8 @@ import { SlidingXBox } from '@styles';
 import { Drawer } from './styles';
 import ThinSideNavBody from './thin-sidenav-body';
 import WideSideNavBody from './wide-sidenav-body';
+import { serverAPI } from '@shared/services';
+import { emptyPagingRes } from '@shared/constants';
 
 interface SideNavProps {
 	isThinSideNavOpen: boolean;
@@ -17,11 +19,11 @@ interface MockServer {
 	icon: string;
 }
 
-const servers: MockServer[] = Array.from({ length: 20 }, (_, i) => ({
-	id: `${i + 1}`,
-	name: `Server ${i}`,
-	icon: 'https://picsum.photos/200',
-}));
+// const servers: MockServer[] = Array.from({ length: 20 }, (_, i) => ({
+// 	id: `${i + 1}`,
+// 	name: `Server ${i}`,
+// 	icon: 'https://picsum.photos/200',
+// }));
 
 interface MockCategory {
 	id: string;
@@ -48,6 +50,8 @@ const SideNav: FC<SideNavProps> = ({
 
 	const getDesktopSidenavWidth = () => (isWideSideNavOpen ? 300 : 64);
 
+	const { data: servers = emptyPagingRes() } = serverAPI.useGetAllQuery();
+
 	return (
 		<>
 			<SlidingXBox
@@ -68,7 +72,7 @@ const SideNav: FC<SideNavProps> = ({
 				</Drawer>
 				<Drawer open={isDesktop} width={64} variant='persistent'>
 					<ThinSideNavBody<MockServer>
-						items={servers}
+						items={servers.results}
 						id='id'
 						name='name'
 						icon='icon'

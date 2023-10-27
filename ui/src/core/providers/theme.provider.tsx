@@ -6,8 +6,9 @@ import {
 	useMediaQuery,
 	createTheme,
 	ThemeOptions,
+	StyledEngineProvider,
 } from '@mui/material';
-import { mainTheme } from './presets';
+import { mainTheme } from '@styles/theme/presets';
 
 export const ThemeContext = createContext({
 	toggleColorMode: () => {},
@@ -40,39 +41,35 @@ export default function ThemeProvider({ children }: ThemeProviderProps) {
 	);
 
 	return (
-		<ThemeContext.Provider value={colorMode}>
-			<MuiThemeProvider theme={_theme}>
-				<GlobalStyles
-					styles={{
-						'*': {
-							boxSizing: 'border-box',
-						},
-						'html, body': {
-							overflowX: 'hidden',
-							overflowY: 'auto',
-						},
-						'html, body, #root': {
-							height: '100%',
-							width: '100%',
-						},
-						img: {
-							width: '100%',
-							height: 'auto',
-						},
-						'.MuiAppBar-root': {
-							backgroundImage: 'none',
-						},
-						// '::-webkit-scrollbar': {
-						// 	width: '0.4rem',
-						// },
-						// '::-webkit-scrollbar-track': {
-						// 	background: 'transparent',
-						// },
-					}}
-				/>
-				<CssBaseline enableColorScheme />
-				{children}
-			</MuiThemeProvider>
-		</ThemeContext.Provider>
+		<StyledEngineProvider injectFirst>
+			<ThemeContext.Provider value={colorMode}>
+				<MuiThemeProvider theme={_theme}>
+					<GlobalStyles
+						styles={{
+							'*': {
+								boxSizing: 'border-box',
+							},
+							'html, body': {
+								overflowX: 'hidden',
+								overflowY: 'auto',
+							},
+							'html, body, #root': {
+								height: '100%',
+								width: '100%',
+							},
+							img: {
+								width: '100%',
+								height: 'auto',
+							},
+							'.MuiAppBar-root': {
+								backgroundImage: 'none',
+							},
+						}}
+					/>
+					<CssBaseline enableColorScheme />
+					{children}
+				</MuiThemeProvider>
+			</ThemeContext.Provider>
+		</StyledEngineProvider>
 	);
 }

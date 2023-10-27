@@ -17,7 +17,11 @@ const ThinSideNavBody = <T extends object>({
 					<TListItem key={item[id] as string}>
 						<Tooltip title={item[name] as string} arrow placement='right'>
 							<TListItemIcon
-								src={item[icon] as string}
+								src={
+									item[icon]
+										? (item[icon] as string)
+										: 'https://picsum.photos/200'
+								}
 								alt={item[name] as string}
 							/>
 						</Tooltip>

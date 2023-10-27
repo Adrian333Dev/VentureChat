@@ -3,11 +3,11 @@ import { FC, ReactNode, useState } from 'react';
 import { Content, Main, Root } from './styles';
 import { Navbar, SideNav } from './components';
 
-interface IMainLayoutProps {
+interface MainLayoutProps {
 	children: ReactNode;
 }
 
-const MainLayout: FC<IMainLayoutProps> = ({ children }) => {
+const MainLayout: FC<MainLayoutProps> = ({ children }) => {
 	const [isThinSideNavOpen, setIsThinSideNavOpen] = useState<boolean>(false);
 	const handleThinSideNavChange = (isOpen: boolean) =>
 		setIsThinSideNavOpen(isOpen);

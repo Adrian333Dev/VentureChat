@@ -1,9 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
+import { categoryAPI, serverAPI } from '@shared/services';
 
 export const store = configureStore({
-	reducer: {},
-	middleware: (getDefaultMiddleware) => getDefaultMiddleware({}).concat([]),
+	reducer: {
+		[categoryAPI.reducerPath]: categoryAPI.reducer,
+		[serverAPI.reducerPath]: serverAPI.reducer,
+	},
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware().concat(categoryAPI.middleware, serverAPI.middleware),
 });
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors

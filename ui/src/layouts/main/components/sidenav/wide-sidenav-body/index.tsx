@@ -31,7 +31,7 @@ const WideSideNavBody = <T extends object>({
 			</Toolbar>
 			<StyledList>
 				{items.map((item) => (
-					<ListItemButton key={item[id] as string} sx={flexCenter}>
+					<ListItemButton key={item[id] as string} sx={flexCenter} dense>
 						<ListItemText primary={item[name] as string} />
 					</ListItemButton>
 				))}
